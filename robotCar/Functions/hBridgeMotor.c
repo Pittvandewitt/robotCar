@@ -19,13 +19,14 @@ int hBridgeMotor(void)
 		PORTC |= (1<<PINC4);
 		PORTC |= (1<<PINC5);
 
-		if(SWITCH_PRESSED){
-
+		if(SWITCH_PRESSED)
+		{
 			PORTD|= (1<<PIND5);
 			PIND |= (1<<PIND1);
 		}
 
-		if(SWITCH_PRESSED2){
+		if(SWITCH_PRESSED2)
+		{
 			PORTD|= (1<<PIND5);
 			PIND |= (1<<PIND0);
 		}

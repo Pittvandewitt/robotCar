@@ -37,13 +37,10 @@ int ultraSound(void)
 		{
 			itoa(distance, sendToLCD, 10);			//Converting int distance to char sendToLCD in decimals
 			dataport = 0x80;
-			wrcomm();
-			
-			LCD_SendData("ONS PROJECT      ");
-			
+			wrcomm();			
+			LCD_SendData("ONS PROJECT      ");			
 			dataport = (0xC0);
-			wrcomm();
-			
+			wrcomm();			
 			LCD_SendData("AFSTAND = ");
 			LCD_SendData(sendToLCD);
 			LCD_SendData("cm");
@@ -58,6 +55,7 @@ int ultraSound(void)
 			wrcomm();
 			LCD_SendData("  BOTSGEVAAR!  ");
 		}
+		
 		else
 		{
 			dataport = 0x80;
@@ -79,15 +77,13 @@ ISR(PCINT1_vect)								//If PORTC interrupts (on PCINT13 pin state change) fire
 	{
 		TCCR1B	=	0;							//Stop timer
 		pulse	=	TCNT1;						//store counter in pulse, for calculating distance
-		TCNT1	=	0;							//reset counter
-		
+		TCNT1	=	0;							//reset counter		
 		i = 0;									//reset i to 0 so timer starts in next if statement
 	}
 	
 	if (i==0)									//First enable timer (i starts at 0 so this executes first)
 	{
-		TCCR1B	|=	(1<<CS10);					//Start timer
-		
+		TCCR1B	|=	(1<<CS10);					//Start timer		
 		i = 1;									//Set i to 1 so timer is stopped and counter is used to calculate distance next interrupt
 	}
 }
