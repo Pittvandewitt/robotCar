@@ -1,12 +1,16 @@
 /*
  * lineTracker.h
  *
- * Created: 8-11-2017 13:40:58
- *  Author: dirks
+ * Created: 9-11-2017 15:04:11
+ *  Author: Thomas
  */ 
 
 #ifndef LINETRACKER_H_
 #define LINETRACKER_H_
+
+#include <avr/io.h>
+#include <stdlib.h>
+#include <util/delay.h>
 
 #define LED5_ON PORTB |= (1<<PORTB5)
 #define LED5_OFF PORTB &= ~(1<<PORTB5)

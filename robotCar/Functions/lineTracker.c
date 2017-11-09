@@ -1,25 +1,24 @@
 /*
- * lineTracker.c
- *
- * Created: 6-11-2017 12:11:23
- * Author : dirks
- */ 
+* lineTracker.c
+*
+* Created: 9-11-2017 15:03:10
+*  Author: Thomas
+*/
 
-#include <avr/io.h>
+#include <lineTracker.h>
 
-int main(void)
+int lineTracker(void)
 {
-	
 	DDRB |= (1<<DDB5);
 	DDRB |= (1<<DDB4);
 	DDRB |= (1<<DDB3);
 	DDRB |= (1<<DDB2);
 	DDRC &= ~(1<<DDC0);
-    
-    while (1) 
-    {		
+	
+	while (1)
+	{
 		if((PINC & 0b00000001) == 0)	//PINC.0
-		{	
+		{
 			LED5_ON;					// Detected
 		}
 		else {
@@ -49,7 +48,5 @@ int main(void)
 		else {
 			LED2_OFF;					//B2 off
 		}
-		
-    }
+	}
 }
-

@@ -1,24 +1,18 @@
 /*
- * IncFile.h
- *
- * Created: 8-11-2017 13:27:37
- *  Author: Thomas
- */ 
-
-
-#ifndef INCFILE_H_
-/*
  * turnSignal.h
  *
- * Created: 8-11-2017 13:40:58
- *  Author: Pittvandewitt
- */
+ * Created: 9-11-2017 15:08:21
+ *  Author: Thomas
+ */ 
 
 #ifndef TURNSIGNAL_H_
 #define TURNSIGNAL_H_
 
-#define F_CPU 16000000
+#include <avr/io.h>
+#include <stdlib.h>
+#include <util/delay.h>
+
 #define LEFT_TURN !(PINC & (1<<PINC5))
 #define RIGHT_TURN !(PINC & (1<<PINC4))
 
-#endif /* TURNSIGNAL_ */
+#endif /* TURNSIGNAL_H_ */
