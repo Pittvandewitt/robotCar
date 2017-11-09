@@ -27,30 +27,47 @@ int ultraSound(void)
 	{
 		PORTB	&=	~(1<<PINB0);				//OUTPUT LOW for clear HIGH
 		_delay_us(5);
-		
 		PORTB	|=	(1<<PINB0);					//OUTPUT trigger HIGH
 		_delay_us(15);							//trigger signal must be at least 10uS, 15uS for safety
-		
 		PORTB	&=	~(1<<PINB0);				//OUTPUT trigger LOW
 		_delay_ms(50);							//Delay for clear signal
-		
 		distance = pulse/58/16;					//Duration of pulse/58/16 (16Mhz means 16 pulses per us) is distance in CM
 		
-		itoa(distance, sendToLCD, 10);			//Converting int distance to char sendToLCD in decimals
+		if(distance>15)
+		{
+			itoa(distance, sendToLCD, 10);			//Converting int distance to char sendToLCD in decimals
+			dataport = 0x80;
+			wrcomm();
+			
+			LCD_SendData("ONS PROJECT      ");
+			
+			dataport = (0xC0);
+			wrcomm();
+			
+			LCD_SendData("AFSTAND = ");
+			LCD_SendData(sendToLCD);
+			LCD_SendData("cm");
+		}
 		
-		dataport = 0x80;
-		wrcomm();
-		
-		LCD_SendData("ONS PROJECT");
-		
-		dataport = (0xC0);
-		wrcomm();
-		
-		LCD_SendData("AFSTAND = ");
-		LCD_SendData(sendToLCD);
-		LCD_SendData("cm");
+		else if(distance < 15 && distance > 0)
+		{
+			dataport = 0x80;
+			wrcomm();
+			LCD_SendData("     PAS OP     ");
+			dataport = (0xC0);
+			wrcomm();
+			LCD_SendData("  BOTSGEVAAR!  ");
+		}
+		else
+		{
+			dataport = 0x80;
+			wrcomm();
+			LCD_SendData("      ERROR!     ");
+			dataport = (0xC0);
+			wrcomm();
+			LCD_SendData("   GEEN ECHO   ");
+		}
 	}
-
 	//while(1);
 	return 1;
 }

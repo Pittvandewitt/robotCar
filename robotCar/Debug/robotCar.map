@@ -39,9 +39,9 @@ Discarded input sections
  .data          0x00000000        0x0 Functions/ultraSound.o
  .bss           0x00000000        0x0 Functions/ultraSound.o
  .rodata.str1.1
-                0x00000000       0x1a Functions/ultraSound.o
+                0x00000000       0x63 Functions/ultraSound.o
  .text.ultraSound
-                0x00000000       0xc0 Functions/ultraSound.o
+                0x00000000      0x108 Functions/ultraSound.o
  .text          0x00000000        0x0 Functions/commandLCD.o
  .data          0x00000000        0x0 Functions/commandLCD.o
  .bss           0x00000000        0x0 Functions/commandLCD.o
@@ -535,26 +535,26 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xb24
+.debug_info     0x00000000      0xbbc
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_info    0x000005f4      0x3fe Functions/ultraSound.o
- .debug_info    0x000009f2       0x88 Functions/lineTracker.o
- .debug_info    0x00000a7a       0xaa main.o
+ .debug_info    0x000005f4      0x496 Functions/ultraSound.o
+ .debug_info    0x00000a8a       0x88 Functions/lineTracker.o
+ .debug_info    0x00000b12       0xaa main.o
 
-.debug_abbrev   0x00000000      0x89d
+.debug_abbrev   0x00000000      0x885
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_abbrev  0x000005a2      0x228 Functions/ultraSound.o
- .debug_abbrev  0x000007ca       0x56 Functions/lineTracker.o
- .debug_abbrev  0x00000820       0x7d main.o
+ .debug_abbrev  0x000005a2      0x210 Functions/ultraSound.o
+ .debug_abbrev  0x000007b2       0x56 Functions/lineTracker.o
+ .debug_abbrev  0x00000808       0x7d main.o
 
-.debug_line     0x00000000      0x50a
+.debug_line     0x00000000      0x519
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x133 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_line    0x00000133      0x282 Functions/ultraSound.o
- .debug_line    0x000003b5      0x110 Functions/lineTracker.o
- .debug_line    0x000004c5       0x45 main.o
+ .debug_line    0x00000133      0x291 Functions/ultraSound.o
+ .debug_line    0x000003c4      0x110 Functions/lineTracker.o
+ .debug_line    0x000004d4       0x45 main.o
 
 .debug_frame    0x00000000       0xac
  *(.debug_frame)
@@ -572,9 +572,9 @@ END GROUP
  .debug_str     0x00000439       0x11 main.o
                                 0x15e (size before relaxing)
 
-.debug_loc      0x00000000      0x1e2
+.debug_loc      0x00000000      0x220
  *(.debug_loc)
- .debug_loc     0x00000000      0x1e2 Functions/ultraSound.o
+ .debug_loc     0x00000000      0x220 Functions/ultraSound.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -594,11 +594,11 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0x50
+.debug_ranges   0x00000000       0x38
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x30 Functions/ultraSound.o
- .debug_ranges  0x00000030       0x10 Functions/lineTracker.o
- .debug_ranges  0x00000040       0x10 main.o
+ .debug_ranges  0x00000000       0x18 Functions/ultraSound.o
+ .debug_ranges  0x00000018       0x10 Functions/lineTracker.o
+ .debug_ranges  0x00000028       0x10 main.o
 
 .debug_macro
  *(.debug_macro)
