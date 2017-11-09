@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00000068  00000000  00000000  00000240  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000c60  00000000  00000000  000002a8  2**0
+  6 .debug_info   00000b24  00000000  00000000  000002a8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000008b5  00000000  00000000  00000f08  2**0
+  7 .debug_abbrev 0000089d  00000000  00000000  00000dcc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000514  00000000  00000000  000017bd  2**0
+  8 .debug_line   0000050a  00000000  00000000  00001669  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000ac  00000000  00000000  00001cd4  2**2
+  9 .debug_frame  000000ac  00000000  00000000  00001b74  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000044a  00000000  00000000  00001d80  2**0
+ 10 .debug_str    0000044a  00000000  00000000  00001c20  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000002b2  00000000  00000000  000021ca  2**0
+ 11 .debug_loc    000001e2  00000000  00000000  0000206a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000050  00000000  00000000  0000247c  2**0
+ 12 .debug_ranges 00000050  00000000  00000000  0000224c  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -101,11 +101,11 @@ Disassembly of section .text:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000a6 <__vector_4>:
-	}
+	//while(1);
+	return 1;
 }
 
-
-ISR(PCINT1_vect)								//If pinstate in PB1 changes start interrupt
+ISR(PCINT1_vect)								//If PORTC interrupts (on PCINT13 pin state change) fire ISR
 {
   a6:	1f 92       	push	r1
   a8:	0f 92       	push	r0
@@ -116,46 +116,49 @@ ISR(PCINT1_vect)								//If pinstate in PB1 changes start interrupt
   b2:	9f 93       	push	r25
   b4:	ef 93       	push	r30
   b6:	ff 93       	push	r31
-	if (i==0)									//First enable counter (i starts at 0 so this executes first)
+	if (i==1)									//this has to be executed second, because this stops the timer
   b8:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_end>
   bc:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_end+0x1>
-  c0:	89 2b       	or	r24, r25
-  c2:	59 f4       	brne	.+22     	; 0xda <__vector_4+0x34>
+  c0:	01 97       	sbiw	r24, 0x01	; 1
+  c2:	81 f4       	brne	.+32     	; 0xe4 <__vector_4+0x3e>
+	//i starts at 0 that is why this if-statement has i == 1.
 	{
-		TCCR1B	|=	(1<<CS10);					//Start counter
-  c4:	e1 e8       	ldi	r30, 0x81	; 129
-  c6:	f0 e0       	ldi	r31, 0x00	; 0
-  c8:	80 81       	ld	r24, Z
-  ca:	81 60       	ori	r24, 0x01	; 1
-  cc:	80 83       	st	Z, r24
-		i=1;									//Set i to 1 so other if-statement executes next time pinstate changes
-  ce:	81 e0       	ldi	r24, 0x01	; 1
-  d0:	90 e0       	ldi	r25, 0x00	; 0
-  d2:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__data_end+0x1>
-  d6:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_end>
+		TCCR1B	=	0;							//Stop timer
+  c4:	10 92 81 00 	sts	0x0081, r1	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+		pulse	=	TCNT1;						//store counter in pulse, for calculating distance
+  c8:	e4 e8       	ldi	r30, 0x84	; 132
+  ca:	f0 e0       	ldi	r31, 0x00	; 0
+  cc:	80 81       	ld	r24, Z
+  ce:	91 81       	ldd	r25, Z+1	; 0x01
+  d0:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <pulse+0x1>
+  d4:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <pulse>
+		TCNT1	=	0;							//reset counter
+  d8:	11 82       	std	Z+1, r1	; 0x01
+  da:	10 82       	st	Z, r1
+		
+		i = 0;									//reset i to 0 so timer starts in next if statement
+  dc:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <__data_end+0x1>
+  e0:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__data_end>
 	}
-
-	if (i==1)									//Pinstate changes again so this if statement is now executed as i = 1
-  da:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_end>
-  de:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_end+0x1>
-  e2:	01 97       	sbiw	r24, 0x01	; 1
-  e4:	81 f4       	brne	.+32     	; 0x106 <__vector_4+0x60>
+	
+	if (i==0)									//First enable timer (i starts at 0 so this executes first)
+  e4:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_end>
+  e8:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_end+0x1>
+  ec:	89 2b       	or	r24, r25
+  ee:	59 f4       	brne	.+22     	; 0x106 <__vector_4+0x60>
 	{
-		TCCR1B	=	0;							//Stop counter
-  e6:	10 92 81 00 	sts	0x0081, r1	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
-		pulse	=	TCNT1;						//pulse is counter value
-  ea:	e4 e8       	ldi	r30, 0x84	; 132
-  ec:	f0 e0       	ldi	r31, 0x00	; 0
-  ee:	80 81       	ld	r24, Z
-  f0:	91 81       	ldd	r25, Z+1	; 0x01
-  f2:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <pulse+0x1>
-  f6:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <pulse>
-		TCNT1	=	0;							//reset counter value
-  fa:	11 82       	std	Z+1, r1	; 0x01
-  fc:	10 82       	st	Z, r1
-		i = 0;									//reset i to 0 so counter starts on next pinstate change, count is needed to calculate distance
-  fe:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <__data_end+0x1>
- 102:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__data_end>
+		TCCR1B	|=	(1<<CS10);					//Start timer
+  f0:	e1 e8       	ldi	r30, 0x81	; 129
+  f2:	f0 e0       	ldi	r31, 0x00	; 0
+  f4:	80 81       	ld	r24, Z
+  f6:	81 60       	ori	r24, 0x01	; 1
+  f8:	80 83       	st	Z, r24
+		
+		i = 1;									//Set i to 1 so timer is stopped and counter is used to calculate distance next interrupt
+  fa:	81 e0       	ldi	r24, 0x01	; 1
+  fc:	90 e0       	ldi	r25, 0x00	; 0
+  fe:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__data_end+0x1>
+ 102:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_end>
 	}
 }
  106:	ff 91       	pop	r31
