@@ -4,6 +4,8 @@
 
 Functions\hBridgeMotor.c
 
+Functions\headLight.c
+
 Functions\ultraSound.c
 
 Functions\commandLCD.c

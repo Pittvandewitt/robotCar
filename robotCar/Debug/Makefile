@@ -43,6 +43,7 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../Functions/hBridgeMotor.c \
+../Functions/headLight.c \
 ../Functions/ultraSound.c \
 ../Functions/commandLCD.c \
 ../Functions/turnSignal.c \
@@ -58,6 +59,7 @@ ASM_SRCS +=
 
 OBJS +=  \
 Functions/hBridgeMotor.o \
+Functions/headLight.o \
 Functions/ultraSound.o \
 Functions/commandLCD.o \
 Functions/turnSignal.o \
@@ -66,6 +68,7 @@ main.o
 
 OBJS_AS_ARGS +=  \
 Functions/hBridgeMotor.o \
+Functions/headLight.o \
 Functions/ultraSound.o \
 Functions/commandLCD.o \
 Functions/turnSignal.o \
@@ -74,6 +77,7 @@ main.o
 
 C_DEPS +=  \
 Functions/hBridgeMotor.d \
+Functions/headLight.d \
 Functions/ultraSound.d \
 Functions/commandLCD.d \
 Functions/turnSignal.d \
@@ -82,6 +86,7 @@ main.d
 
 C_DEPS_AS_ARGS +=  \
 Functions/hBridgeMotor.d \
+Functions/headLight.d \
 Functions/ultraSound.d \
 Functions/commandLCD.d \
 Functions/turnSignal.d \
@@ -102,6 +107,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

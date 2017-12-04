@@ -164,6 +164,9 @@
     <Compile Include="Functions\hBridgeMotor.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Functions\headLight.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Functions\ultraSound.c">
       <SubType>compile</SubType>
     </Compile>
