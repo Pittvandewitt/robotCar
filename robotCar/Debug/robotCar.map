@@ -592,10 +592,10 @@ END GROUP
  .debug_str     0x0000044a       0x11 main.o
                                 0x15c (size before relaxing)
 
-.debug_loc      0x00000000      0x281
+.debug_loc      0x00000000      0x291
  *(.debug_loc)
- .debug_loc     0x00000000       0x61 Functions/headLight.o
- .debug_loc     0x00000061      0x220 Functions/ultraSound.o
+ .debug_loc     0x00000000       0x71 Functions/headLight.o
+ .debug_loc     0x00000071      0x220 Functions/ultraSound.o
 
 .debug_macinfo
  *(.debug_macinfo)

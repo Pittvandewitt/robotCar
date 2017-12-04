@@ -25,9 +25,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  10 .debug_str    0000045b  00000000  00000000  00001dac  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000281  00000000  00000000  00002207  2**0
+ 11 .debug_loc    00000291  00000000  00000000  00002207  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000048  00000000  00000000  00002488  2**0
+ 12 .debug_ranges 00000048  00000000  00000000  00002498  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -118,15 +118,15 @@ ISR(ADC_vect)
   b4:	80 91 78 00 	lds	r24, 0x0078	; 0x800078 <__TEXT_REGION_LENGTH__+0x7e0078>
   b8:	90 91 79 00 	lds	r25, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7e0079>
 
-		if		(val <  150)	{ PORTB=0b00000000; }
-  bc:	86 39       	cpi	r24, 0x96	; 150
+		if		(val > 75)	{ PORTB=0b00100000; } // Output pin
+  bc:	8c 34       	cpi	r24, 0x4C	; 76
   be:	91 05       	cpc	r25, r1
-  c0:	10 f4       	brcc	.+4      	; 0xc6 <__vector_21+0x20>
-  c2:	15 b8       	out	0x05, r1	; 5
-  c4:	02 c0       	rjmp	.+4      	; 0xca <__vector_21+0x24>
-		else 					{ PORTB=0b00100000; }
-  c6:	80 e2       	ldi	r24, 0x20	; 32
-  c8:	85 b9       	out	0x05, r24	; 5
+  c0:	18 f0       	brcs	.+6      	; 0xc8 <__vector_21+0x22>
+  c2:	80 e2       	ldi	r24, 0x20	; 32
+  c4:	85 b9       	out	0x05, r24	; 5
+  c6:	01 c0       	rjmp	.+2      	; 0xca <__vector_21+0x24>
+		else 				{ PORTB=0b00000000; }
+  c8:	15 b8       	out	0x05, r1	; 5
 }
   ca:	9f 91       	pop	r25
   cc:	8f 91       	pop	r24
@@ -161,7 +161,7 @@ void ADC_init(void)
 
 int headLight(void)
 {
-	DDRB |= (1<<DDB5);
+	DDRB |= (1<<DDB5);			// Output pin
   f0:	25 9a       	sbi	0x04, 5	; 4
 	
 	ADC_init();

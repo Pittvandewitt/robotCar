@@ -18,8 +18,8 @@ ISR(ADC_vect)
 {
 		uint16_t val = ADC;
 
-		if		(val <  150)	{ PORTB=0b00000000; }
-		else 					{ PORTB=0b00100000; }	// Output pin
+		if		(val > 75)	{ PORTB=0b00100000; }	// Output pin
+		else 				{ PORTB=0b00000000; }
 }
 
 void ADC_init(void)
