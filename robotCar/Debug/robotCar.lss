@@ -3,31 +3,31 @@ robotCar.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  000001ec  2**0
+  0 .data         00000000  00800100  00800100  000001f0  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000178  00000000  00000000  00000074  2**1
+  1 .text         0000017c  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000004  00800100  00800100  000001ec  2**0
+  2 .bss          00000004  00800100  00800100  000001f0  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000001ec  2**0
+  3 .comment      00000030  00000000  00000000  000001f0  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000021c  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000220  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000078  00000000  00000000  0000025c  2**0
+  5 .debug_aranges 00000078  00000000  00000000  00000260  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000c11  00000000  00000000  000002d4  2**0
+  6 .debug_info   00000c1d  00000000  00000000  000002d8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000008d1  00000000  00000000  00000ee5  2**0
+  7 .debug_abbrev 000008de  00000000  00000000  00000ef5  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000050d  00000000  00000000  000017b6  2**0
+  8 .debug_line   0000051f  00000000  00000000  000017d3  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000e0  00000000  00000000  00001cc4  2**2
+  9 .debug_frame  000000d4  00000000  00000000  00001cf4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000045b  00000000  00000000  00001da4  2**0
+ 10 .debug_str    0000045b  00000000  00000000  00001dc8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000291  00000000  00000000  000021ff  2**0
+ 11 .debug_loc    00000277  00000000  00000000  00002223  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000048  00000000  00000000  00002490  2**0
+ 12 .debug_ranges 00000048  00000000  00000000  0000249a  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -37,7 +37,7 @@ Disassembly of section .text:
    4:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
    8:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
    c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
-  10:	0c 94 7c 00 	jmp	0xf8	; 0xf8 <__vector_4>
+  10:	0c 94 7f 00 	jmp	0xfe	; 0xfe <__vector_4>
   14:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   18:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   1c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
@@ -72,7 +72,7 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	e8 e7       	ldi	r30, 0x78	; 120
+  7a:	ec e7       	ldi	r30, 0x7C	; 124
   7c:	f1 e0       	ldi	r31, 0x01	; 1
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
@@ -94,19 +94,19 @@ Disassembly of section .text:
   94:	a4 30       	cpi	r26, 0x04	; 4
   96:	b2 07       	cpc	r27, r18
   98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
-  9a:	0e 94 b5 00 	call	0x16a	; 0x16a <main>
-  9e:	0c 94 ba 00 	jmp	0x174	; 0x174 <_exit>
+  9a:	0e 94 b7 00 	call	0x16e	; 0x16e <main>
+  9e:	0c 94 bc 00 	jmp	0x178	; 0x178 <_exit>
 
 000000a2 <__bad_interrupt>:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000a6 <__vector_21>:
 
-#include <avr/io.h>
-#include <avr/interrupt.h>
-
-ISR(ADC_vect)
+void ADC_init(void)
 {
+	ADMUX |= (1<<REFS0) | (1<<MUX0);
+	ADCSRA |= (1<<ADEN) | (1<<ADSC) | (1<<ADATE) | (1<<ADIE) | (1<<ADPS2) | (1<<ADPS1);
+	sei();
   a6:	1f 92       	push	r1
   a8:	0f 92       	push	r0
   aa:	0f b6       	in	r0, 0x3f	; 63
@@ -114,147 +114,136 @@ ISR(ADC_vect)
   ae:	11 24       	eor	r1, r1
   b0:	8f 93       	push	r24
   b2:	9f 93       	push	r25
-	uint16_t val = ADC;
   b4:	80 91 78 00 	lds	r24, 0x0078	; 0x800078 <__TEXT_REGION_LENGTH__+0x7e0078>
   b8:	90 91 79 00 	lds	r25, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7e0079>
-
-	if (val > 220)					// Sensitivity trigger value
   bc:	8d 3d       	cpi	r24, 0xDD	; 221
   be:	91 05       	cpc	r25, r1
-  c0:	18 f0       	brcs	.+6      	; 0xc8 <__vector_21+0x22>
-	{
-		PORTB=0b00000001;			// Port high
-  c2:	81 e0       	ldi	r24, 0x01	; 1
-  c4:	85 b9       	out	0x05, r24	; 5
-  c6:	01 c0       	rjmp	.+2      	; 0xca <__vector_21+0x24>
-	}
-	else
-	{
-		PORTB=0b00000000;			//Port low
-  c8:	15 b8       	out	0x05, r1	; 5
-	}
-}
-  ca:	9f 91       	pop	r25
-  cc:	8f 91       	pop	r24
-  ce:	0f 90       	pop	r0
-  d0:	0f be       	out	0x3f, r0	; 63
-  d2:	0f 90       	pop	r0
-  d4:	1f 90       	pop	r1
-  d6:	18 95       	reti
+  c0:	40 f4       	brcc	.+16     	; 0xd2 <__vector_21+0x2c>
+  c2:	15 b8       	out	0x05, r1	; 5
+  c4:	9f 91       	pop	r25
+  c6:	8f 91       	pop	r24
+  c8:	0f 90       	pop	r0
+  ca:	0f be       	out	0x3f, r0	; 63
+  cc:	0f 90       	pop	r0
+  ce:	1f 90       	pop	r1
+  d0:	18 95       	reti
+  d2:	81 e0       	ldi	r24, 0x01	; 1
+  d4:	85 b9       	out	0x05, r24	; 5
+  d6:	9f 91       	pop	r25
+  d8:	8f 91       	pop	r24
+  da:	0f 90       	pop	r0
+  dc:	0f be       	out	0x3f, r0	; 63
+  de:	0f 90       	pop	r0
+  e0:	1f 90       	pop	r1
+  e2:	18 95       	reti
 
-000000d8 <ADC_init>:
-
-void ADC_init(void)
-{
-	ADMUX |= (1<<REFS0) | (1<<MUX0);
-  d8:	ec e7       	ldi	r30, 0x7C	; 124
-  da:	f0 e0       	ldi	r31, 0x00	; 0
-  dc:	80 81       	ld	r24, Z
-  de:	81 64       	ori	r24, 0x41	; 65
-  e0:	80 83       	st	Z, r24
-	ADCSRA |= (1<<ADEN) | (1<<ADSC) | (1<<ADATE) | (1<<ADIE) | (1<<ADPS2) | (1<<ADPS1);
-  e2:	ea e7       	ldi	r30, 0x7A	; 122
-  e4:	f0 e0       	ldi	r31, 0x00	; 0
-  e6:	80 81       	ld	r24, Z
-  e8:	8e 6e       	ori	r24, 0xEE	; 238
-  ea:	80 83       	st	Z, r24
-	sei();
-  ec:	78 94       	sei
-  ee:	08 95       	ret
-
-000000f0 <headLight>:
+000000e4 <headLight>:
 }
 
 int headLight(void)
 {
 	DDRB |= (1<<DDB0);				// Initialize port db0
-  f0:	20 9a       	sbi	0x04, 0	; 4
-	ADC_init();
-  f2:	0e 94 6c 00 	call	0xd8	; 0xd8 <ADC_init>
-  f6:	ff cf       	rjmp	.-2      	; 0xf6 <headLight+0x6>
+  e4:	20 9a       	sbi	0x04, 0	; 4
+	}
+}
 
-000000f8 <__vector_4>:
+void ADC_init(void)
+{
+	ADMUX |= (1<<REFS0) | (1<<MUX0);
+  e6:	80 91 7c 00 	lds	r24, 0x007C	; 0x80007c <__TEXT_REGION_LENGTH__+0x7e007c>
+  ea:	81 64       	ori	r24, 0x41	; 65
+  ec:	80 93 7c 00 	sts	0x007C, r24	; 0x80007c <__TEXT_REGION_LENGTH__+0x7e007c>
+	ADCSRA |= (1<<ADEN) | (1<<ADSC) | (1<<ADATE) | (1<<ADIE) | (1<<ADPS2) | (1<<ADPS1);
+  f0:	80 91 7a 00 	lds	r24, 0x007A	; 0x80007a <__TEXT_REGION_LENGTH__+0x7e007a>
+  f4:	8e 6e       	ori	r24, 0xEE	; 238
+  f6:	80 93 7a 00 	sts	0x007A, r24	; 0x80007a <__TEXT_REGION_LENGTH__+0x7e007a>
+	sei();
+  fa:	78 94       	sei
+  fc:	ff cf       	rjmp	.-2      	; 0xfc <headLight+0x18>
+
+000000fe <__vector_4>:
+	//while(1);
+	return 1;
 }
 
 ISR(PCINT1_vect)								//If PORTC interrupts (on PCINT13 pin state change) fire ISR
 {
+  fe:	1f 92       	push	r1
+ 100:	0f 92       	push	r0
+ 102:	0f b6       	in	r0, 0x3f	; 63
+ 104:	0f 92       	push	r0
+ 106:	11 24       	eor	r1, r1
+ 108:	8f 93       	push	r24
+ 10a:	9f 93       	push	r25
 	if (i==1)									//this has to be executed second, because this stops the timer
-	//i starts at 0 that is why this if-statement has i == 1.
-  f8:	1f 92       	push	r1
-  fa:	0f 92       	push	r0
-  fc:	0f b6       	in	r0, 0x3f	; 63
-  fe:	0f 92       	push	r0
- 100:	11 24       	eor	r1, r1
- 102:	8f 93       	push	r24
- 104:	9f 93       	push	r25
- 106:	ef 93       	push	r30
- 108:	ff 93       	push	r31
-	{
- 10a:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_end>
- 10e:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_end+0x1>
- 112:	01 97       	sbiw	r24, 0x01	; 1
- 114:	81 f4       	brne	.+32     	; 0x136 <__vector_4+0x3e>
-		TCCR1B	=	0;							//Stop timer
+ 10c:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_end>
+ 110:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_end+0x1>
+ 114:	01 97       	sbiw	r24, 0x01	; 1
+ 116:	c1 f0       	breq	.+48     	; 0x148 <__vector_4+0x4a>
 		pulse	=	TCNT1;						//store counter in pulse, for calculating distance
-		TCNT1	=	0;							//reset counter		
- 116:	10 92 81 00 	sts	0x0081, r1	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+		TCNT1	=	0;							//reset counter
 		i = 0;									//reset i to 0 so timer starts in next if statement
- 11a:	e4 e8       	ldi	r30, 0x84	; 132
- 11c:	f0 e0       	ldi	r31, 0x00	; 0
- 11e:	80 81       	ld	r24, Z
- 120:	91 81       	ldd	r25, Z+1	; 0x01
- 122:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <pulse+0x1>
- 126:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <pulse>
 	}
- 12a:	11 82       	std	Z+1, r1	; 0x01
- 12c:	10 82       	st	Z, r1
 	
 	if (i==0)									//First enable timer (i starts at 0 so this executes first)
- 12e:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <__data_end+0x1>
- 132:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__data_end>
+ 118:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_end>
+ 11c:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_end+0x1>
+ 120:	89 2b       	or	r24, r25
+ 122:	59 f4       	brne	.+22     	; 0x13a <__vector_4+0x3c>
 	{
-		TCCR1B	|=	(1<<CS10);					//Start timer		
+		TCCR1B	|=	(1<<CS10);					//Start timer
+ 124:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 128:	81 60       	ori	r24, 0x01	; 1
+ 12a:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
 		i = 1;									//Set i to 1 so timer is stopped and counter is used to calculate distance next interrupt
- 136:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_end>
- 13a:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_end+0x1>
- 13e:	89 2b       	or	r24, r25
- 140:	59 f4       	brne	.+22     	; 0x158 <__vector_4+0x60>
+ 12e:	81 e0       	ldi	r24, 0x01	; 1
+ 130:	90 e0       	ldi	r25, 0x00	; 0
+ 132:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__data_end+0x1>
+ 136:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_end>
 	}
 }
- 142:	e1 e8       	ldi	r30, 0x81	; 129
- 144:	f0 e0       	ldi	r31, 0x00	; 0
- 146:	80 81       	ld	r24, Z
- 148:	81 60       	ori	r24, 0x01	; 1
- 14a:	80 83       	st	Z, r24
- 14c:	81 e0       	ldi	r24, 0x01	; 1
- 14e:	90 e0       	ldi	r25, 0x00	; 0
- 150:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__data_end+0x1>
- 154:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_end>
- 158:	ff 91       	pop	r31
- 15a:	ef 91       	pop	r30
- 15c:	9f 91       	pop	r25
- 15e:	8f 91       	pop	r24
- 160:	0f 90       	pop	r0
- 162:	0f be       	out	0x3f, r0	; 63
- 164:	0f 90       	pop	r0
- 166:	1f 90       	pop	r1
- 168:	18 95       	reti
+ 13a:	9f 91       	pop	r25
+ 13c:	8f 91       	pop	r24
+ 13e:	0f 90       	pop	r0
+ 140:	0f be       	out	0x3f, r0	; 63
+ 142:	0f 90       	pop	r0
+ 144:	1f 90       	pop	r1
+ 146:	18 95       	reti
+ISR(PCINT1_vect)								//If PORTC interrupts (on PCINT13 pin state change) fire ISR
+{
+	if (i==1)									//this has to be executed second, because this stops the timer
+	//i starts at 0 that is why this if-statement has i == 1.
+	{
+		TCCR1B	=	0;							//Stop timer
+ 148:	10 92 81 00 	sts	0x0081, r1	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+		pulse	=	TCNT1;						//store counter in pulse, for calculating distance
+ 14c:	80 91 84 00 	lds	r24, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+ 150:	90 91 85 00 	lds	r25, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
+ 154:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <pulse+0x1>
+ 158:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <pulse>
+		TCNT1	=	0;							//reset counter
+ 15c:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
+ 160:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+		i = 0;									//reset i to 0 so timer starts in next if statement
+ 164:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <__data_end+0x1>
+ 168:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__data_end>
+ 16c:	d5 cf       	rjmp	.-86     	; 0x118 <__vector_4+0x1a>
 
-0000016a <main>:
+0000016e <main>:
 #include <avr/interrupt.h>
 #include <stdlib.h>
 
 int main(void) 
 {
 	headLight();
- 16a:	0e 94 78 00 	call	0xf0	; 0xf0 <headLight>
+ 16e:	0e 94 72 00 	call	0xe4	; 0xe4 <headLight>
 }
- 16e:	80 e0       	ldi	r24, 0x00	; 0
- 170:	90 e0       	ldi	r25, 0x00	; 0
- 172:	08 95       	ret
+ 172:	80 e0       	ldi	r24, 0x00	; 0
+ 174:	90 e0       	ldi	r25, 0x00	; 0
+ 176:	08 95       	ret
 
-00000174 <_exit>:
- 174:	f8 94       	cli
+00000178 <_exit>:
+ 178:	f8 94       	cli
 
-00000176 <__stop_program>:
- 176:	ff cf       	rjmp	.-2      	; 0x176 <__stop_program>
+0000017a <__stop_program>:
+ 17a:	ff cf       	rjmp	.-2      	; 0x17a <__stop_program>

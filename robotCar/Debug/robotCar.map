@@ -38,34 +38,36 @@ Discarded input sections
  .text          0x00000000        0x0 Functions/headLight.o
  .data          0x00000000        0x0 Functions/headLight.o
  .bss           0x00000000        0x0 Functions/headLight.o
+ .text.ADC_init
+                0x00000000       0x18 Functions/headLight.o
  .text          0x00000000        0x0 Functions/ultraSound.o
  .data          0x00000000        0x0 Functions/ultraSound.o
  .bss           0x00000000        0x0 Functions/ultraSound.o
  .rodata.str1.1
                 0x00000000       0x63 Functions/ultraSound.o
  .text.ultraSound
-                0x00000000      0x108 Functions/ultraSound.o
+                0x00000000      0x102 Functions/ultraSound.o
  .text          0x00000000        0x0 Functions/commandLCD.o
  .data          0x00000000        0x0 Functions/commandLCD.o
  .bss           0x00000000        0x0 Functions/commandLCD.o
- .text.wrcomm   0x00000000       0x2e Functions/commandLCD.o
  .text.LCD_Init
-                0x00000000       0x5e Functions/commandLCD.o
- .text.wrdata   0x00000000       0x2e Functions/commandLCD.o
+                0x00000000      0x112 Functions/commandLCD.o
  .text.LCD_SendData
-                0x00000000       0x4a Functions/commandLCD.o
+                0x00000000       0x5c Functions/commandLCD.o
+ .text.wrcomm   0x00000000       0x2e Functions/commandLCD.o
+ .text.wrdata   0x00000000       0x2e Functions/commandLCD.o
  .bss.i         0x00000000        0x2 Functions/commandLCD.o
  .bss.pulse     0x00000000        0x2 Functions/commandLCD.o
- .debug_info    0x00000000      0x475 Functions/commandLCD.o
- .debug_abbrev  0x00000000      0x16d Functions/commandLCD.o
- .debug_loc     0x00000000      0x35f Functions/commandLCD.o
+ .debug_info    0x00000000      0x8aa Functions/commandLCD.o
+ .debug_abbrev  0x00000000      0x187 Functions/commandLCD.o
+ .debug_loc     0x00000000      0x77d Functions/commandLCD.o
  .debug_aranges
                 0x00000000       0x38 Functions/commandLCD.o
  .debug_ranges  0x00000000       0x28 Functions/commandLCD.o
- .debug_line    0x00000000      0x299 Functions/commandLCD.o
+ .debug_line    0x00000000      0x3da Functions/commandLCD.o
  .debug_str     0x00000000      0x1ec Functions/commandLCD.o
  .comment       0x00000000       0x31 Functions/commandLCD.o
- .debug_frame   0x00000000       0x74 Functions/commandLCD.o
+ .debug_frame   0x00000000       0x60 Functions/commandLCD.o
  .text          0x00000000        0x0 Functions/turnSignal.o
  .data          0x00000000        0x0 Functions/turnSignal.o
  .bss           0x00000000        0x0 Functions/turnSignal.o
@@ -85,13 +87,13 @@ Discarded input sections
  .data          0x00000000        0x0 Functions/lineTracker.o
  .bss           0x00000000        0x0 Functions/lineTracker.o
  .text.lineTracker
-                0x00000000       0x34 Functions/lineTracker.o
+                0x00000000       0x3c Functions/lineTracker.o
  .debug_info    0x00000000       0x88 Functions/lineTracker.o
  .debug_abbrev  0x00000000       0x56 Functions/lineTracker.o
  .debug_aranges
                 0x00000000       0x20 Functions/lineTracker.o
  .debug_ranges  0x00000000       0x10 Functions/lineTracker.o
- .debug_line    0x00000000      0x110 Functions/lineTracker.o
+ .debug_line    0x00000000      0x128 Functions/lineTracker.o
  .debug_str     0x00000000      0x170 Functions/lineTracker.o
  .comment       0x00000000       0x31 Functions/lineTracker.o
  .debug_frame   0x00000000       0x24 Functions/lineTracker.o
@@ -324,7 +326,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x178
+.text           0x00000000      0x17c
  *(.vectors)
  .vectors       0x00000000       0x68 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
@@ -410,24 +412,22 @@ END GROUP
                 0x000000a6                . = ALIGN (0x2)
  *(.text.*)
  .text.__vector_21
-                0x000000a6       0x32 Functions/headLight.o
+                0x000000a6       0x3e Functions/headLight.o
                 0x000000a6                __vector_21
- .text.ADC_init
-                0x000000d8       0x18 Functions/headLight.o
-                0x000000d8                ADC_init
  .text.headLight
-                0x000000f0        0x8 Functions/headLight.o
-                0x000000f0                headLight
+                0x000000e4       0x1a Functions/headLight.o
+                0x000000e4                headLight
  .text.__vector_4
-                0x000000f8       0x72 Functions/ultraSound.o
-                0x000000f8                __vector_4
- .text.main     0x0000016a        0xa main.o
-                0x0000016a                main
-                0x00000174                . = ALIGN (0x2)
+                0x000000fe       0x70 Functions/ultraSound.o
+                0x000000fe                __vector_4
+ .text.startup.main
+                0x0000016e        0xa main.o
+                0x0000016e                main
+                0x00000178                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000174        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x00000174                _exit
-                0x00000174                exit
+ .fini9         0x00000178        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000178                _exit
+                0x00000178                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -446,11 +446,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000174        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000178        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000178                _etext = .
+                0x0000017c                _etext = .
 
-.data           0x00800100        0x0 load address 0x00000178
+.data           0x00800100        0x0 load address 0x0000017c
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -469,8 +469,8 @@ END GROUP
  .bss.pulse     0x00800102        0x2 Functions/ultraSound.o
  *(COMMON)
                 0x00800104                PROVIDE (__bss_end, .)
-                0x00000178                __data_load_start = LOADADDR (.data)
-                0x00000178                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000017c                __data_load_start = LOADADDR (.data)
+                0x0000017c                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800104        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -555,32 +555,32 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xc11
+.debug_info     0x00000000      0xc1d
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_info    0x000005f4       0xdd Functions/headLight.o
- .debug_info    0x000006d1      0x496 Functions/ultraSound.o
- .debug_info    0x00000b67       0xaa main.o
+ .debug_info    0x000005f4       0xe9 Functions/headLight.o
+ .debug_info    0x000006dd      0x496 Functions/ultraSound.o
+ .debug_info    0x00000b73       0xaa main.o
 
-.debug_abbrev   0x00000000      0x8d1
+.debug_abbrev   0x00000000      0x8de
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_abbrev  0x000005a2       0xa2 Functions/headLight.o
- .debug_abbrev  0x00000644      0x210 Functions/ultraSound.o
- .debug_abbrev  0x00000854       0x7d main.o
+ .debug_abbrev  0x000005a2       0xaf Functions/headLight.o
+ .debug_abbrev  0x00000651      0x210 Functions/ultraSound.o
+ .debug_abbrev  0x00000861       0x7d main.o
 
-.debug_line     0x00000000      0x50d
+.debug_line     0x00000000      0x51f
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x133 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_line    0x00000133      0x104 Functions/headLight.o
- .debug_line    0x00000237      0x291 Functions/ultraSound.o
- .debug_line    0x000004c8       0x45 main.o
+ .debug_line    0x00000133      0x116 Functions/headLight.o
+ .debug_line    0x00000249      0x291 Functions/ultraSound.o
+ .debug_line    0x000004da       0x45 main.o
 
-.debug_frame    0x00000000       0xe0
+.debug_frame    0x00000000       0xd4
  *(.debug_frame)
  .debug_frame   0x00000000       0x58 Functions/headLight.o
- .debug_frame   0x00000058       0x64 Functions/ultraSound.o
- .debug_frame   0x000000bc       0x24 main.o
+ .debug_frame   0x00000058       0x58 Functions/ultraSound.o
+ .debug_frame   0x000000b0       0x24 main.o
 
 .debug_str      0x00000000      0x45b
  *(.debug_str)
@@ -592,10 +592,10 @@ END GROUP
  .debug_str     0x0000044a       0x11 main.o
                                 0x15c (size before relaxing)
 
-.debug_loc      0x00000000      0x291
+.debug_loc      0x00000000      0x277
  *(.debug_loc)
  .debug_loc     0x00000000       0x71 Functions/headLight.o
- .debug_loc     0x00000071      0x220 Functions/ultraSound.o
+ .debug_loc     0x00000071      0x206 Functions/ultraSound.o
 
 .debug_macinfo
  *(.debug_macinfo)
