@@ -2,7 +2,7 @@
  * ultraSound.h
  *
  * Created: 9-11-2017 15:16:50
- *  Author: Thomas
+ *  Author: Jelle
  */ 
 
 #ifndef ULTRASOUND_H_

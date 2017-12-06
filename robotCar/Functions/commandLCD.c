@@ -1,9 +1,9 @@
 /*
- * audioLCD.c
- *
- * Created: 9-11-2017 13:16:49
- *  Author: Thomas
- */ 
+* audioLCD.c
+*
+* Created: 9-11-2017 13:16:49
+*  Author: Jelle
+*/
 
 #include <commandLCD.h>
 

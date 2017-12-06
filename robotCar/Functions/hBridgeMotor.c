@@ -2,7 +2,7 @@
 * hBridgeMotor.c
 *
 * Created: 9-11-2017 15:17:59
-*  Author: Thomas
+*  Author: dirks
 */
 
 #include <hBridgeMotor.h>
