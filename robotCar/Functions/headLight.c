@@ -1,12 +1,6 @@
 /*
  * headLight.c
  *
- * Created: 4-12-2017 12:17:23
- *  Author: Thomas
- */ 
-/*
- * headLight.c
- *
  * Created: 4-12-2017 12:13:23
  *  Author: Pittvandewitt
  */
@@ -18,8 +12,14 @@ ISR(ADC_vect)
 {
 		uint16_t val = ADC;
 
-		if		(val > 75)	{ PORTB=0b00100000; }	// Output pin
-		else 				{ PORTB=0b00000000; }
+		if (val < 200)
+		{
+			PORTB=0b00000000;
+		}
+		else
+		{
+			PORTB=0b00000001;
+		}
 }
 
 void ADC_init(void)
@@ -31,12 +31,12 @@ void ADC_init(void)
 
 int headLight(void)
 {
-	DDRB |= (1<<DDB5);			// Output pin
+	DDRB |= (1<<DDB5) | (1<<DDB4) | (1<<DDB3) | (1<<DDB2) | (1<<DDB1) | (1<<DDB0);
+	DDRB &= ~(1<<DDB7);
 	
 	ADC_init();
 	
 	while (1)
 	{
-		
 	}
 }
